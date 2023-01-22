@@ -1,6 +1,6 @@
 package ua.masaltsev.rickandmorty.model;
 
-enum Gender {
+public enum Gender {
     FEMALE("Female"),
     MALE("Male"),
     GENDERLESS("Genderless"),

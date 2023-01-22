@@ -1,6 +1,6 @@
 package ua.masaltsev.rickandmorty.model;
 
-enum Status {
+public enum Status {
     ALIVE("Alive"),
     DEAD("Dead"),
     UNKNOWN("unknown");

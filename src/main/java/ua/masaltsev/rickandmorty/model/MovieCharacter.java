@@ -22,6 +22,7 @@ public class MovieCharacter {
             sequenceName = "movie_character_id_seq",
             allocationSize = 1)
     private Long id;
+    private Long externalId;
     private String name;
     @Enumerated(EnumType.STRING)
     private Status status;
