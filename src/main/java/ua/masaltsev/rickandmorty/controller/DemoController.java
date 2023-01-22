@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.masaltsev.rickandmorty.service.MovieCharacterService;
 
+// TODO remove the controller
 @RestController
 @RequestMapping("/demo")
 @Log4j2

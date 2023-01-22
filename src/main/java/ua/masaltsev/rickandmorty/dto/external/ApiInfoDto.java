@@ -1,4 +1,4 @@
-package ua.masaltsev.rickandmorty.dto;
+package ua.masaltsev.rickandmorty.dto.external;
 
 import lombok.Data;
 

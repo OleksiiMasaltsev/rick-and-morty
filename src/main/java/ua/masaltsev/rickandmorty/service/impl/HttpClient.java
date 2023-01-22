@@ -1,4 +1,4 @@
-package ua.masaltsev.rickandmorty.service;
+package ua.masaltsev.rickandmorty.service.impl;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

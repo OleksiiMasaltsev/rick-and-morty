@@ -7,4 +7,5 @@ import java.util.Set;
 
 public interface MovieCharacterRepository extends JpaRepository<MovieCharacter, Long> {
     List<MovieCharacter> findAllByExternalIdIn(Set<Long> externalIds);
+    List<MovieCharacter> findAllByNameContains(String namePart);
 }

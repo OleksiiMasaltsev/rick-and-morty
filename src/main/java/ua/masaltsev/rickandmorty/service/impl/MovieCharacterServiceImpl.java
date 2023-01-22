@@ -3,12 +3,11 @@ package ua.masaltsev.rickandmorty.service.impl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import ua.masaltsev.rickandmorty.dto.ApiCharacterDto;
-import ua.masaltsev.rickandmorty.dto.ApiResponseDto;
+import ua.masaltsev.rickandmorty.dto.external.ApiCharacterDto;
+import ua.masaltsev.rickandmorty.dto.external.ApiResponseDto;
 import ua.masaltsev.rickandmorty.dto.mapper.MovieCharacterMapper;
 import ua.masaltsev.rickandmorty.model.MovieCharacter;
 import ua.masaltsev.rickandmorty.repository.MovieCharacterRepository;
-import ua.masaltsev.rickandmorty.service.HttpClient;
 import ua.masaltsev.rickandmorty.service.MovieCharacterService;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -32,8 +31,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
         this.mapper = mapper;
     }
 
-    @Scheduled(cron = "*/30 * * * * ?")
-//    @Scheduled(cron = "0 8 * * *")
+    @Scheduled(cron = "0 0 8 * * *")
     @Override
     public void syncExternalCharacters() {
         log.info("syncExternalCharacters was called at " + LocalDateTime.now());
@@ -47,6 +45,19 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
         }
     }
 
+    @Override
+    public MovieCharacter getRandomCharacter() {
+        long count = repository.count();
+        long randomId = (long) (Math.random() * count);
+        return repository.getReferenceById(randomId);
+    }
+
+    @Override
+    public List<MovieCharacter> findAllByNameContains(String namePart) {
+        return repository.findAllByNameContains(namePart);
+    }
+
+    // TODO Test the method
     private void saveDtoToDb(ApiResponseDto apiResponseDto) {
         Map<Long, ApiCharacterDto> externalDtoMap = Arrays.stream(apiResponseDto.getResults())
                 .collect(Collectors.toMap(ApiCharacterDto::getId, Function.identity()));
