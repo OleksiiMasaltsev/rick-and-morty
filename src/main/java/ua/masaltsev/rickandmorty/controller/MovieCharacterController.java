@@ -22,6 +22,12 @@ public class MovieCharacterController {
         this.mapper = mapper;
     }
 
+    @GetMapping("/load")
+    public String runDemo() {
+        movieCharacterService.syncExternalCharacters();
+        return "Done!";
+    }
+
     @GetMapping("/random")
     public CharacterResponseDto getRandom() {
         MovieCharacter character = movieCharacterService.getRandomCharacter();
