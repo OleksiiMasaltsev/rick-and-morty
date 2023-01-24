@@ -1,5 +1,6 @@
 package ua.masaltsev.rickandmorty.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,13 +23,22 @@ public class MovieCharacterController {
         this.mapper = mapper;
     }
 
+    @GetMapping("/load")
+    @Operation(description = "load data to the DB")
+    public String loadCharactersToDb() {
+        movieCharacterService.syncExternalCharacters();
+        return "Done!";
+    }
+
     @GetMapping("/random")
+    @Operation(description = "get a random character out of DB")
     public CharacterResponseDto getRandom() {
         MovieCharacter character = movieCharacterService.getRandomCharacter();
         return mapper.toDto(character);
     }
 
     @GetMapping("by-name")
+    @Operation(description = "find all characters whose name contains input string")
     public List<CharacterResponseDto> findAllByNameContains(
             @RequestParam("name") String namePart) {
         return movieCharacterService.findAllByNameContains(namePart).stream()
