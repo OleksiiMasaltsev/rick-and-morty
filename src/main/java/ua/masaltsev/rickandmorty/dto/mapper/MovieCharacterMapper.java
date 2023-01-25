@@ -7,7 +7,6 @@ import ua.masaltsev.rickandmorty.model.Gender;
 import ua.masaltsev.rickandmorty.model.MovieCharacter;
 import ua.masaltsev.rickandmorty.model.Status;
 
-// TODO test the mapper
 @Component
 public class MovieCharacterMapper {
     public MovieCharacter toModel(ApiCharacterDto dto) {

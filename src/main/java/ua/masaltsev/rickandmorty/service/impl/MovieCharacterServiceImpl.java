@@ -3,6 +3,7 @@ package ua.masaltsev.rickandmorty.service.impl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.tokens.ScalarToken;
 import ua.masaltsev.rickandmorty.dto.external.ApiCharacterDto;
 import ua.masaltsev.rickandmorty.dto.external.ApiResponseDto;
 import ua.masaltsev.rickandmorty.dto.mapper.MovieCharacterMapper;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 public class MovieCharacterServiceImpl implements MovieCharacterService {
+    private static final String URL_CHARACTER = "https://rickandmortyapi.com/api/character";
     private final HttpClient httpClient;
     private final MovieCharacterRepository repository;
     private final MovieCharacterMapper mapper;
@@ -35,8 +37,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
     @Override
     public void syncExternalCharacters() {
         log.info("syncExternalCharacters was called at " + LocalDateTime.now());
-        ApiResponseDto apiResponseDto = httpClient.get("https://rickandmortyapi.com/api/character",
-                ApiResponseDto.class);
+        ApiResponseDto apiResponseDto = httpClient.get(URL_CHARACTER, ApiResponseDto.class);
         saveDtoToDb(apiResponseDto);
         while (apiResponseDto.getInfo().getNext() != null) {
             apiResponseDto = httpClient.get(apiResponseDto.getInfo().getNext(),
@@ -64,6 +65,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
         Set<Long> externalIds = externalDtoMap.keySet();
 
         List<MovieCharacter> existingCharacters = repository.findAllByExternalIdIn(externalIds);
+
         Map<Long, MovieCharacter> existingDtoMap = existingCharacters.stream()
                 .collect(Collectors.toMap(MovieCharacter::getExternalId, Function.identity()));
         Set<Long> existingIds = existingDtoMap.keySet();
