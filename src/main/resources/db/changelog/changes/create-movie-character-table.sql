@@ -3,6 +3,7 @@
 CREATE TABLE IF NOT EXISTS public.movie_character
 (
     id bigint not null,
+    external_id bigint not null,
     name character varying(256) not null,
     status character varying(256) not null,
     gender character varying(256) not null,
