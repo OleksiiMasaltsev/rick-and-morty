@@ -34,7 +34,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
         this.mapper = mapper;
     }
 
-    @PostConstruct
+//    @PostConstruct
     @Scheduled(cron = "0 0 8 * * *")
     @Override
     public void syncExternalCharacters() {
