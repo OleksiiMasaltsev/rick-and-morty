@@ -41,6 +41,20 @@ class MovieCharacterControllerTest {
 
     @Test
     void getRandom() {
+        MovieCharacter movieCharacter = new MovieCharacter(
+                8L, 8L, "Adjudicator Rick", Status.DEAD, Gender.MALE);
+        Mockito.when(movieCharacterService.getRandomCharacter()).thenReturn(movieCharacter);
+
+        RestAssuredMockMvc
+                .when()
+                    .get("/movie-characters/random")
+                .then()
+                    .statusCode(200)
+                    .body("id", Matchers.equalTo(8))
+                    .body("externalId", Matchers.equalTo(8))
+                    .body("name", Matchers.equalTo("Adjudicator Rick"))
+                    .body("status", Matchers.equalTo(Status.DEAD.name()))
+                    .body("gender", Matchers.equalTo(Gender.MALE.name()));
     }
 
     @Test
@@ -53,28 +67,29 @@ class MovieCharacterControllerTest {
         String name = "di";
         Mockito.when(movieCharacterService.findAllByNameContains(name)).thenReturn(movieCharacterList);
 
-        RestAssuredMockMvc.given()
-                .queryParam("name", name)
+        RestAssuredMockMvc
+                .given()
+                    .queryParam("name", name)
                 .when()
-                .get("/movie-characters/by-name")
+                    .get("/movie-characters/by-name")
                 .then()
-                .statusCode(200)
-                .body("size()", Matchers.equalTo(3))
-                .body("[0].id", Matchers.equalTo(8))
-                .body("[0].externalId", Matchers.equalTo(8))
-                .body("[0].name", Matchers.equalTo("Adjudicator Rick"))
-                .body("[0].status", Matchers.equalTo(Status.DEAD.name()))
-                .body("[0].gender", Matchers.equalTo(Gender.MALE.name()))
-                .body("[1].id", Matchers.equalTo(379))
-                .body("[1].externalId", Matchers.equalTo(379))
-                .body("[1].name", Matchers.equalTo("Wedding Bartender"))
-                .body("[1].status", Matchers.equalTo(Status.UNKNOWN.name()))
-                .body("[1].gender", Matchers.equalTo(Gender.MALE.name()))
-                .body("[2].id", Matchers.equalTo(563))
-                .body("[2].externalId", Matchers.equalTo(578))
-                .body("[2].name", Matchers.equalTo("Snake Soldier"))
-                .body("[2].status", Matchers.equalTo(Status.ALIVE.name()))
-                .body("[2].gender", Matchers.equalTo(Gender.FEMALE.name()));
+                    .statusCode(200)
+                    .body("size()", Matchers.equalTo(3))
+                    .body("[0].id", Matchers.equalTo(8))
+                    .body("[0].externalId", Matchers.equalTo(8))
+                    .body("[0].name", Matchers.equalTo("Adjudicator Rick"))
+                    .body("[0].status", Matchers.equalTo(Status.DEAD.name()))
+                    .body("[0].gender", Matchers.equalTo(Gender.MALE.name()))
+                    .body("[1].id", Matchers.equalTo(379))
+                    .body("[1].externalId", Matchers.equalTo(379))
+                    .body("[1].name", Matchers.equalTo("Wedding Bartender"))
+                    .body("[1].status", Matchers.equalTo(Status.UNKNOWN.name()))
+                    .body("[1].gender", Matchers.equalTo(Gender.MALE.name()))
+                    .body("[2].id", Matchers.equalTo(563))
+                    .body("[2].externalId", Matchers.equalTo(578))
+                    .body("[2].name", Matchers.equalTo("Snake Soldier"))
+                    .body("[2].status", Matchers.equalTo(Status.ALIVE.name()))
+                    .body("[2].gender", Matchers.equalTo(Gender.FEMALE.name()));
     }
 
     @AfterEach
