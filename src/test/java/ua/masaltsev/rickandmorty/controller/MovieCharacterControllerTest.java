@@ -37,6 +37,15 @@ class MovieCharacterControllerTest {
 
     @Test
     void loadCharactersToDb() {
+        String done = "Done!";
+        RestAssuredMockMvc
+                .when()
+                    .get("/movie-characters/load")
+                .then()
+                    .statusCode(200)
+                    .body(Matchers.equalTo(done));
+
+        Mockito.verify(movieCharacterService).syncExternalCharacters();
     }
 
     @Test
@@ -90,9 +99,5 @@ class MovieCharacterControllerTest {
                     .body("[2].name", Matchers.equalTo("Snake Soldier"))
                     .body("[2].status", Matchers.equalTo(Status.ALIVE.name()))
                     .body("[2].gender", Matchers.equalTo(Gender.FEMALE.name()));
-    }
-
-    @AfterEach
-    void tearDown() {
     }
 }
