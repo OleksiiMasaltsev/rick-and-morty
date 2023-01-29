@@ -48,17 +48,18 @@ class MovieCharacterControllerTest {
         List<MovieCharacter> movieCharacterList = List.of(
                 new MovieCharacter(8L, 8L, "Adjudicator Rick", Status.DEAD, Gender.MALE),
                 new MovieCharacter(379L, 379L, "Wedding Bartender", Status.UNKNOWN, Gender.MALE),
-                new MovieCharacter(563L, 578L, "Snake Soldier", Status.ALIVE, Gender.MALE),
-                new MovieCharacter(717L, 720L, "Eddie", Status.DEAD, Gender.MALE)
+                new MovieCharacter(563L, 578L, "Snake Soldier", Status.ALIVE, Gender.FEMALE)
         );
-        String param = "di";
-        Mockito.when(movieCharacterService.findAllByNameContains(param)).thenReturn(movieCharacterList);
+        String name = "di";
+        Mockito.when(movieCharacterService.findAllByNameContains(name)).thenReturn(movieCharacterList);
 
-        RestAssuredMockMvc.when()
-                .get("/movie-characters/by-name?name=" + param)
+        RestAssuredMockMvc.given()
+                .queryParam("name", name)
+                .when()
+                .get("/movie-characters/by-name")
                 .then()
                 .statusCode(200)
-                .body("size()", Matchers.equalTo(4))
+                .body("size()", Matchers.equalTo(3))
                 .body("[0].id", Matchers.equalTo(8))
                 .body("[0].externalId", Matchers.equalTo(8))
                 .body("[0].name", Matchers.equalTo("Adjudicator Rick"))
@@ -73,12 +74,7 @@ class MovieCharacterControllerTest {
                 .body("[2].externalId", Matchers.equalTo(578))
                 .body("[2].name", Matchers.equalTo("Snake Soldier"))
                 .body("[2].status", Matchers.equalTo(Status.ALIVE.name()))
-                .body("[2].gender", Matchers.equalTo(Gender.MALE.name()))
-                .body("[3].id", Matchers.equalTo(717))
-                .body("[3].externalId", Matchers.equalTo(720))
-                .body("[3].name", Matchers.equalTo("Eddie"))
-                .body("[3].status", Matchers.equalTo(Status.DEAD.name()))
-                .body("[3].gender", Matchers.equalTo(Gender.MALE.name()));
+                .body("[2].gender", Matchers.equalTo(Gender.FEMALE.name()));
     }
 
     @AfterEach
