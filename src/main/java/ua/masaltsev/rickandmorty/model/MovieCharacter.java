@@ -8,13 +8,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "movie_character")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MovieCharacter {
     @Id
     @GeneratedValue(generator = "movie_character_id_seq", strategy = GenerationType.SEQUENCE)
