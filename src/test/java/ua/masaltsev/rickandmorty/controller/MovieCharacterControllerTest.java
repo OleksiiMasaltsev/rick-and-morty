@@ -2,7 +2,6 @@ package ua.masaltsev.rickandmorty.controller;
 
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,8 +17,6 @@ import ua.masaltsev.rickandmorty.model.MovieCharacter;
 import ua.masaltsev.rickandmorty.model.Status;
 import ua.masaltsev.rickandmorty.service.MovieCharacterService;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest

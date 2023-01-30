@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.tokens.ScalarToken;
 import ua.masaltsev.rickandmorty.dto.external.ApiCharacterDto;
 import ua.masaltsev.rickandmorty.dto.external.ApiResponseDto;
 import ua.masaltsev.rickandmorty.dto.mapper.MovieCharacterMapper;
@@ -34,7 +33,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
         this.mapper = mapper;
     }
 
-//    @PostConstruct
+    @PostConstruct
     @Scheduled(cron = "0 0 8 * * *")
     @Override
     public void syncExternalCharacters() {
@@ -61,7 +60,7 @@ public class MovieCharacterServiceImpl implements MovieCharacterService {
     }
 
     // TODO Test the method
-    void saveDtoToDb(ApiResponseDto apiResponseDto) {
+    private void saveDtoToDb(ApiResponseDto apiResponseDto) {
         Map<Long, ApiCharacterDto> externalDtoMap = Arrays.stream(apiResponseDto.getResults())
                 .collect(Collectors.toMap(ApiCharacterDto::getId, Function.identity()));
         Set<Long> externalIds = externalDtoMap.keySet();
