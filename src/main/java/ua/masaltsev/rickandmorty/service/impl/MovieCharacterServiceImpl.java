@@ -22,18 +22,18 @@ import java.util.stream.Collectors;
 @Log4j2
 public class MovieCharacterServiceImpl implements MovieCharacterService {
     private static final String URL_CHARACTER = "https://rickandmortyapi.com/api/character";
-    private final HttpClient httpClient;
+    private final HttpClientEleven httpClient;
     private final MovieCharacterRepository repository;
     private final MovieCharacterMapper mapper;
 
-    public MovieCharacterServiceImpl(HttpClient client, MovieCharacterRepository repository,
+    public MovieCharacterServiceImpl(HttpClientEleven httpClient, MovieCharacterRepository repository,
                                      MovieCharacterMapper mapper) {
-        this.httpClient = client;
+        this.httpClient = httpClient;
         this.repository = repository;
         this.mapper = mapper;
     }
 
-    @PostConstruct
+//    @PostConstruct
     @Scheduled(cron = "0 0 8 * * *")
     @Override
     public void syncExternalCharacters() {
